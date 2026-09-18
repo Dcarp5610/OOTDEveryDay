@@ -70,12 +70,12 @@ export default function App() {
               <View style={styles.stats}>
 
                 <View style={styles.stat}>
-                  <Text style={styles.statNumber}>53</Text>
+                  <Text style={styles.statNumber}>12</Text>
                   <Text style={styles.statLabel}>Posts</Text>
                 </View>
 
                 <View style={styles.stat}>
-                  <Text style={styles.statNumber}>12</Text>
+                  <Text style={styles.statNumber}>2</Text>
                   <Text style={styles.statLabel}>Members</Text>
                 </View>
 
