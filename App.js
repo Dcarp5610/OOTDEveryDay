@@ -1,5 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import {
+  Alert,
   Image,
   Pressable,
   ScrollView,
@@ -7,6 +8,11 @@ import {
   Text,
   View,
 } from 'react-native';
+
+import {
+  SafeAreaProvider,
+  SafeAreaView,
+} from 'react-native-safe-area-context';
 
 const photoUrls = [
   require('./assets/Outfits/outfit1.jpg'),
@@ -25,97 +31,107 @@ const photoUrls = [
 
 export default function App() {
   return (
-    <View style={styles.container}>
+    <SafeAreaProvider>
+      <SafeAreaView style={styles.container}>
 
-      {/* Header */}
-      <View style={styles.header}>
+        {/* Header */}
+        <View style={styles.header}>
 
-        <Text style={styles.backButton}>‹</Text>
+          <Text style={styles.backButton}>‹</Text>
 
-        <View style={styles.headerTitle}>
-          <Text style={styles.title}>Group Profile</Text>
-          <Text style={styles.username}>ootd_everyday</Text>
+          <View style={styles.headerTitle}>
+            <Text style={styles.title}>Group Profile</Text>
+            <Text style={styles.username}>ootd_street</Text>
+          </View>
+
+          <View style={styles.addButton}>
+            <Text style={styles.addButtonText}>+</Text>
+          </View>
+
         </View>
 
-        <View style={styles.addButton}>
-          <Text style={styles.addButtonText}>+</Text>
-        </View>
+        {/* Scrollable content */}
+        <ScrollView>
 
-      </View>
+          {/* Profile section */}
+          <View style={styles.profileSection}>
 
-      {/* Scrollable content */}
-      <ScrollView>
+            <View style={styles.profileRow}>
 
-        {/* Profile section */}
-        <View style={styles.profileSection}>
-
-          <View style={styles.profileRow}>
-
-            {/* Profile picture */}
-            <View style={styles.profilePictureOuter}>
-              <View style={styles.profilePicture}>
-                <Text style={styles.profilePictureText}>OO</Text>
-                <Text style={styles.profilePictureText}>TD</Text>
+              {/* Profile picture */}
+              <View style={styles.profilePictureOuter}>
+                <View style={styles.profilePicture}>
+                  <Text style={styles.profilePictureText}>OO</Text>
+                  <Text style={styles.profilePictureText}>TD</Text>
+                </View>
               </View>
+
+              {/* Statistics */}
+              <View style={styles.stats}>
+
+                <View style={styles.stat}>
+                  <Text style={styles.statNumber}>53</Text>
+                  <Text style={styles.statLabel}>Posts</Text>
+                </View>
+
+                <View style={styles.stat}>
+                  <Text style={styles.statNumber}>12</Text>
+                  <Text style={styles.statLabel}>Members</Text>
+                </View>
+
+                <View style={styles.stat}>
+                  <Text style={styles.statNumber}>1</Text>
+                  <Text style={styles.statLabel}>Admin</Text>
+                </View>
+
+              </View>
+
             </View>
 
-            {/* Statistics */}
-            <View style={styles.stats}>
-
-              <View style={styles.stat}>
-                <Text style={styles.statNumber}>53</Text>
-                <Text style={styles.statLabel}>Posts</Text>
-              </View>
-
-              <View style={styles.stat}>
-                <Text style={styles.statNumber}>12</Text>
-                <Text style={styles.statLabel}>Members</Text>
-              </View>
-
-              <View style={styles.stat}>
-                <Text style={styles.statNumber}>1</Text>
-                <Text style={styles.statLabel}>Admin</Text>
-              </View>
-
+            {/* Description */}
+            <View style={styles.description}>
+              <Text style={styles.groupName}>OOTD Street</Text>
+              <Text style={styles.descriptionText}>Street Fashion!</Text>
+              <Text style={styles.descriptionText}>
+                Your daily streetwear inspo!
+              </Text>
             </View>
 
           </View>
 
-          {/* Description */}
-          <View style={styles.description}>
-            <Text style={styles.groupName}>OOTD Everyday</Text>
-            <Text style={styles.descriptionText}>Fit check! 👕</Text>
-            <Text style={styles.descriptionText}>
-              You know we'll hype you up.
-            </Text>
+          {/* Member Button */}
+          <Pressable style={styles.memberButton}>
+            <View style={styles.memberContent}>
+              <Text style={styles.memberButtonText}>Member</Text>
+              <View style={styles.memberArrow} />
+            </View>
+          </Pressable>
+
+          {/* Photo Grid */}
+          <View style={styles.photoGrid}>
+            {photoUrls.map((url, index) => (
+              <Image
+                key={index}
+                source={url}
+                style={styles.photo}
+              />
+            ))}
           </View>
 
-        </View>
+          {/* Alert Button */}
+          <Pressable
+            style={styles.alertButton}
+            onPress={() => Alert.alert('Alert Button pressed')}
+          >
+            <Text style={styles.alertButtonText}>Alert</Text>
+          </Pressable>
 
-        {/* Member Button */}
-        <Pressable style={styles.memberButton}>
-          <View style={styles.memberContent}>
-            <Text style={styles.memberButtonText}>Member</Text>
-            <Text style={styles.memberArrow}>⌄</Text>
-          </View>
-        </Pressable>
+        </ScrollView>
 
-        {/* Photo Grid */}
-        <View style={styles.photoGrid}>
-          {photoUrls.map((url, index) => (
-            <Image
-              key={index}
-              source={url}
-              style={styles.photo}
-            />
-          ))}
-        </View>
+        <StatusBar style="auto" />
 
-      </ScrollView>
-
-      <StatusBar style="auto" />
-
-    </View>
+      </SafeAreaView>
+    </SafeAreaProvider>
   );
 }
 
@@ -162,18 +178,18 @@ const styles = StyleSheet.create({
   addButton: {
     width: 22,
     height: 22,
-    borderWidth: 1.5,
-    borderColor: '#555',
+    borderWidth: 2,
+    borderColor: '#060606',
     borderRadius: 6,
     justifyContent: 'center',
     alignItems: 'center',
   },
 
   addButtonText: {
-    fontSize: 17,
+    fontSize: 18,
     fontWeight: 'bold',
-    color: '#333',
-    lineHeight: 18,
+    color: '#060606',
+    lineHeight: 19,
   },
 
   // Profile section
@@ -192,7 +208,7 @@ const styles = StyleSheet.create({
     height: 96,
     borderRadius: 48,
     borderWidth: 2,
-    borderColor: '#e91e63',
+    borderColor: '#760910',
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#ffffff',
@@ -203,15 +219,16 @@ const styles = StyleSheet.create({
     width: 88,
     height: 88,
     borderRadius: 44,
-    backgroundColor: '#1689c7',
+    backgroundColor: '#127782cf',
     justifyContent: 'center',
     alignItems: 'center',
   },
 
   profilePictureText: {
     color: '#fff',
-    fontSize: 20,
+    fontSize: 21,
     lineHeight: 20,
+    fontWeight: 'bold',
   },
 
   // Statistics
@@ -279,11 +296,17 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
 
+  // Down arrow
   memberArrow: {
-    fontSize: 16,
-    color: '#555',
-    marginLeft: 3,
-    marginTop: -3,
+    width: 0,
+    height: 0,
+    borderLeftWidth: 5,
+    borderRightWidth: 5,
+    borderTopWidth: 6,
+    borderLeftColor: 'transparent',
+    borderRightColor: 'transparent',
+    borderTopColor: '#555',
+    marginLeft: 5,
   },
 
   // Photo Grid
@@ -297,6 +320,24 @@ const styles = StyleSheet.create({
     aspectRatio: 1,
     borderWidth: 1,
     borderColor: '#ffffff',
+  },
+
+  // Alert Button
+  alertButton: {
+    backgroundColor: '#1689c7',
+    height: 50,
+    marginHorizontal: 20,
+    marginTop: 10,
+    marginBottom: 30,
+    borderRadius: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  alertButtonText: {
+    color: '#ffffff',
+    fontSize: 18,
+    fontWeight: 'bold',
   },
 
 });
